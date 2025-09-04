@@ -4,16 +4,16 @@ import os
 
 app = Flask(__name__)
 
-# Ensure log directory exists
-LOG_DIR = "/app/logs"
-os.makedirs(LOG_DIR, exist_ok=True)
-LOG_FILE = os.path.join(LOG_DIR, "requests.log")
+# Disable Flask's default logging
+logging.getLogger('werkzeug').disabled = True
 
-# Configure logging
+os.makedirs("/app/logs", exist_ok=True)
+
+# Configure our logging
 logging.basicConfig(
-    filename=LOG_FILE,
+    filename="/app/logs/requests.log",
     level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    format="%(asctime)s - %(message)s"
 )
 
 @app.route("/log", methods=["POST"])
@@ -23,4 +23,4 @@ def log_request():
     return jsonify({"status": "logged"}), 200
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5002, debug=True)
+    app.run(host="0.0.0.0", port=5002)
