@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 @app.route("/api/data", methods=["GET"])
-def get_data():
+def get_data()
     response = {"message": "Hello from Backend API!"}
 
     # Send log info to logger
