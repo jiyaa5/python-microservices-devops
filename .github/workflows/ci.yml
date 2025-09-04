@@ -75,16 +75,17 @@ jobs:
     if: failure() # runs only if previous jobs fail
 
     steps:
-      # Slack Alert Example
       - name: Send Slack Notification
         uses: slackapi/slack-github-action@v1.26.0
         with:
           payload: |
             {
-              "text": "🚨 CI/CD pipeline failed for ${{ github.repository }} on ${{ github.ref }}!"
+              "text": ":rotating_light: CI/CD pipeline *failed*!\n\nRepository: `${{ github.repository }}`\nBranch: `${{ github.ref }}`\nWorkflow: `${{ github.workflow }}`\nActor: `${{ github.actor }}`\nRun Details: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|Click here to see logs>"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+   
 
     #   # OR Email Alert Example
     #   - name: Send Email
