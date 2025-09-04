@@ -11,26 +11,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout repo
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Set up Python (for backend/logger tests)
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      # 3. Install dependencies (backend + logger)
       - name: Install dependencies
         run: |
           pip install -r backend/requirements.txt
           pip install -r logger/requirements.txt
-
-      # 4. Run tests (you can keep it minimal for now)
-      - name: Run tests
-        run: |
-          pytest || echo "No tests yet"
 
   docker:
     needs: build-and-test
@@ -40,7 +32,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 5. Log in to DockerHub
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
@@ -86,17 +77,3 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
    
-
-    #   # OR Email Alert Example
-    #   - name: Send Email
-        # if: failure()
-    #     uses: dawidd6/action-send-mail@v3
-    #     with:
-    #       server_address: smtp.gmail.com
-    #       server_port: 465
-    #       username: ${{ secrets.EMAIL_USER }}
-    #       password: ${{ secrets.EMAIL_PASS }}
-    #       subject: "🚨 CI/CD Pipeline Failed"
-    #       to: your-email@example.com
-    #       from: GitHub Actions <noreply@github.com>
-    #       body: "Pipeline failed for ${{ github.repository }} on branch ${{ github.ref }}."

@@ -6,10 +6,9 @@ import datetime
 
 app = Flask(__name__)
 
-# PostgreSQL connection function
 def get_db_connection():
     conn = psycopg2.connect(
-        host="postgres",  # Matches your docker-compose service name
+        host="postgres", 
         database=os.environ.get("POSTGRES_DB", "mydb"),
         user=os.environ.get("POSTGRES_USER", "user"),
         password=os.environ.get("POSTGRES_PASSWORD", "password")
@@ -59,7 +58,6 @@ def get_data():
         conn.commit()
         conn.close()
         
-        # Add DB data to response
         response["users"] = [{"id": row[0], "name": row[1]} for row in users]
     
     except Exception as e:

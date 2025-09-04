@@ -8,7 +8,6 @@ sudo usermod -a -G docker ec2-user
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
-# Create a docker-compose file [cite: 82]
 cat <<EOF > /home/ec2-user/docker-compose.yml
 services:
   backend:
@@ -52,6 +51,5 @@ volumes:
   logger-data:
 EOF
 
-# Run docker-compose [cite: 82]
 cd /home/ec2-user
 sudo /usr/local/bin/docker-compose up -d
